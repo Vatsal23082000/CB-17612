@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+cli_help_deploy() {
+  echo "
+Command: single-activity
+Usage: 
+  ./scaling-activity single-activity cluster_name/crn operation-id"
+  exit 1
+}
+
+[ ! -n "$1" ] && cli_help_deploy
+export CLUSTER=$1
+
+[ ! -n "$2" ] && cli_help_deploy
+export OPERATION_ID=$2
+
+cd
+cd thunderhead
+clients/cdpcli/cdp.sh datahub describe-scaling-activity  --cluster $CLUSTER  --operation-id $OPERATION_ID --profile localhost

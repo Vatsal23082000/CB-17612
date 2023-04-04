@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+
+cli_help_deploy() {
+  echo "
+Command: failed
+Usage: 
+  ./scaling-activity failed cluster_name/crn"
+  exit 1
+}
+
+[ ! -n "$1" ] && cli_help_deploy
+export CLUSTER=$1
+
+cd
+cd thunderhead
+loop --every 600s 'clients/cdpcli/cdp.sh datahub list-scaling-activities  --cluster $CLUSTER  --duration 10 --only-failed-scaling-activities  --profile localhost'

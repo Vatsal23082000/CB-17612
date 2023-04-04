@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -e
+export CLITOOL_WORKDIR=$(cd $(dirname $0) && pwd)
+
+cli_help() {
+  cli_name=${0##*/}
+  echo "
+$cli_name
+Usage: $cli_name [command]
+Commands:
+  failed 
+  all
+  single-activity
+"
+  exit 1
+}
+
+case "$1" in
+  failed)
+    "$CLITOOL_WORKDIR/commands/failed" "$2" 
+    ;;
+  all)
+    "$CLITOOL_WORKDIR/commands/all" "$2" 
+    ;;
+  single-activity)
+    "$CLITOOL_WORKDIR/commands/single-activity" "$2" "$3" 
+    ;;
+  *)
+    cli_help
+    ;;
+esac
